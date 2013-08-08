@@ -17,7 +17,8 @@ cd TAILS-OSX
 
 ## Create the EFI bootloader
 
-You should run the following command:
+You can either build the EFI bootloader containing grub yourself from a linux
+machine by running this command:
 
 ```
 grub2-mkimage -d /usr/lib/grub2-efi/x86_64-efi/ -o BOOTX64.efi \
@@ -27,7 +28,9 @@ gfxterm gfxmenu efi_gop efi_uga video loadbios gzio video_bochs \
 video_cirrus echo true loadenv
 ```
 
-Somebody claims to have the output of that commmand hosted here: https://sites.google.com/a/montleon.com/home/EFI.tar.gz.
+Or if you are lazy and don't care about security you can trust that this
+sketchoid ran the above command and saved the file to this address:
+https://sites.google.com/a/montleon.com/home/EFI.tar.gz.
 
 Use at your own risk.
 
