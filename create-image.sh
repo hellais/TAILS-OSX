@@ -42,7 +42,17 @@ mount_iso () {
 download_tails () {
   curl -o data/tails.iso.sig https://tails.boum.org/torrents/files/tails-i386-0.20.iso.sig
   curl -o data/tails.iso http://dl.amnesia.boum.org/tails/stable/tails-i386-0.20/tails-i386-0.20.iso
-  gpg --verify data/tails.sig
+  curl -o data/tails-signing.key https://tails.boum.org/tails-signing.key
+
+  gpg --no-default-keyring --keyring data/tmp_keyring.pgp --import data/tails-signing.key
+  FINGERPRINT=$( gpg --no-default-keyring --keyring data/tmp_keyring.pgp --fingerprint BE2CD9C1 2>/dev/null | awk '/Key fingerprint/ { print $4 $5 $6 $7 $8 $9 $10 $11 $12 $13}')
+
+  if [ "$FINGERPRINT" == "0D24B36AA9A2A651787876451202821CBE2CD9C1" ];then
+    echo "ERROR! The imported key does not seem to be right one. Something is fishy!"
+    rm data/tmp_keyring.pgp
+    exit 1
+  fi
+  gpg --verify data/tails.iso.sig
 }
 
 list_disks () {
