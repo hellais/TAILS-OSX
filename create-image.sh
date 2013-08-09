@@ -40,8 +40,8 @@ mount_iso () {
 }
 
 download_tails () {
-  curl -o data/tails.iso.sig https://tails.boum.org/torrents/files/tails-i386-0.19.iso.sig
-  curl -o data/tails.iso http://dl.amnesia.boum.org/tails/stable/tails-i386-0.19/tails-i386-0.19.iso
+  curl -o data/tails.iso.sig https://tails.boum.org/torrents/files/tails-i386-0.20.iso.sig
+  curl -o data/tails.iso http://dl.amnesia.boum.org/tails/stable/tails-i386-0.20/tails-i386-0.20.iso
   gpg --verify data/tails.sig
 }
 
