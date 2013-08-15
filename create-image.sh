@@ -43,20 +43,23 @@ mount_iso () {
   eval $__resultvar="'$mount_point'"
 }
 
-download_tails () {
-  curl -o data/tails.iso.sig https://tails.boum.org/torrents/files/tails-i386-0.20.iso.sig
-  curl -o data/tails.iso http://dl.amnesia.boum.org/tails/stable/tails-i386-0.20/tails-i386-0.20.iso
+verify_tails () {
   curl -o data/tails-signing.key https://tails.boum.org/tails-signing.key
+  curl -o data/tails.iso.sig https://tails.boum.org/torrents/files/tails-i386-0.20.iso.sig
 
   gpg --no-default-keyring --keyring data/tmp_keyring.pgp --import data/tails-signing.key
   FINGERPRINT=$( gpg --no-default-keyring --keyring data/tmp_keyring.pgp --fingerprint BE2CD9C1 2>/dev/null | awk '/Key fingerprint/ { print $4 $5 $6 $7 $8 $9 $10 $11 $12 $13}')
-
-  if [ "$FINGERPRINT" == "0D24B36AA9A2A651787876451202821CBE2CD9C1" ];then
+  
+  if [ "$FINGERPRINT" != "0D24B36AA9A2A651787876451202821CBE2CD9C1" ];then
     echo "ERROR! The imported key does not seem to be right one. Something is fishy!"
     rm data/tmp_keyring.pgp
     exit 1
   fi
   gpg --verify data/tails.iso.sig
+}
+
+download_tails () {
+  curl -o data/tails.iso http://dl.amnesia.boum.org/tails/stable/tails-i386-0.20/tails-i386-0.20.iso
 }
 
 list_disks () {
@@ -88,6 +91,8 @@ create_image () {
   else
     download_tails
   fi
+
+  verify_tails
 
   if [ -f data/BOOTX64.efi ];then
     echo "[+] Found a EFI boot image in data/BOOTX64.efi. Using it."
