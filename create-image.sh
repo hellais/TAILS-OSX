@@ -92,12 +92,8 @@ create_image () {
   if [ -f data/BOOTX64.efi ];then
     echo "[+] Found a EFI boot image in data/BOOTX64.efi. Using it."
   else
-    echo "[+] We currently don't support generating it. To do so youself you should run:"
-    echo "grub2-mkimage -d /usr/lib/grub2-efi/x86_64-efi/ -o BOOTX64.efi -O x86_64-efi --prefix /efi/boot part_gpt part_msdos lvm fat ext2 "
-         "chain boot configfile normal minicmd linux reboot halt search"
-         "gfxterm gfxmenu efi_gop efi_uga video loadbios gzio video_bochs"
-         "video_cirrus echo true loadenv"
-    echo "inside of a linux box..."
+    echo "[+] Generating the BOOTX64.efi with vagrant. This will take a while."
+    vagrant up
   fi
 
   create_disk $TARGET_DISK
