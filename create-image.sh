@@ -8,6 +8,8 @@ fi
 create_disk () {
   TARGET_DISK=$1
 
+  # This erases the TARGET disk and creates 1 FAT32 partition that is of the
+  # size of the drive.
   if [ "$( uname -s )" == "Darwin" ];then
     diskutil eraseDisk FAT32 TAILSLIVECD $TARGET_DISK
   else
@@ -16,6 +18,7 @@ create_disk () {
 }
 
 mount_disk () {
+  # This mounts the USB disk and returns the mount_point of the USB disk
   local  __resultvar=$1
   if [ "$( uname -s )" == "Darwin" ];then
     local mount_point="/Volumes/TAILSLIVECD"
@@ -28,6 +31,7 @@ mount_disk () {
 }
 
 mount_iso () {
+  # This mounts the .iso and returns it's mount point
   local  __resultvar=$1
   if [ "$( uname -s )" == "Darwin" ];then
     local mount_point="/Volumes/TAILS_ISO"
@@ -56,6 +60,8 @@ download_tails () {
 }
 
 list_disks () {
+  # This lists all the disks in a way that is readable by the user. The read
+  # input will then be passed as arugment to the create_disk function.
   diskutil list
   echo "for example: disk2"
 }
