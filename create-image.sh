@@ -1,4 +1,7 @@
 #!/bin/bash
+TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/tails-i386-0.20/tails-i386-0.20.iso"
+TAILS_SIG_URL="https://tails.boum.org/torrents/files/tails-i386-0.20.iso.sig"
+TAILS_KEY_URL="https://tails.boum.org/tails-signing.key"
 
 if [ ! -d "data" ]; then
   echo "[+] Creating data/ directory..."
@@ -44,8 +47,8 @@ mount_iso () {
 }
 
 verify_tails () {
-  curl -o data/tails-signing.key https://tails.boum.org/tails-signing.key
-  curl -o data/tails.iso.sig https://tails.boum.org/torrents/files/tails-i386-0.20.iso.sig
+  curl -o data/tails-signing.key $TAILS_KEY_URL
+  curl -o data/tails.iso.sig $TAILS_SIG_URL
 
   gpg --no-default-keyring --keyring data/tmp_keyring.pgp --import data/tails-signing.key
   FINGERPRINT=$( gpg --no-default-keyring --keyring data/tmp_keyring.pgp --fingerprint BE2CD9C1 2>/dev/null | awk '/Key fingerprint/ { print $4 $5 $6 $7 $8 $9 $10 $11 $12 $13}')
@@ -59,7 +62,7 @@ verify_tails () {
 }
 
 download_tails () {
-  curl -o data/tails.iso http://dl.amnesia.boum.org/tails/stable/tails-i386-0.20/tails-i386-0.20.iso
+  curl -o data/tails.iso $TAILS_ISO_URL
 }
 
 list_disks () {
@@ -119,4 +122,5 @@ create_image () {
   echo "All done"
 }
 
-create_image
+create_image;
+
