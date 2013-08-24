@@ -1,7 +1,7 @@
 # Tested platforms
 
 
-## MacBook Pro Retina, Mid 2012
+## MacBook Pro Retina, Mid 2012 (MacBookPro10,1)
 
 * **boots** yes
 
