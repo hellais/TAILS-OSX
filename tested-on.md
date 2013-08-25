@@ -1,5 +1,14 @@
 # Tested platforms
 
+## MacBook Pro Retina, Late 2012 (MacBookPro10,2)
+
+* **boots** yes
+
+* **wifi** yes
+
+* **trackpad** yes
+
+Notes: 
 
 ## MacBook Pro Retina, Mid 2012 (MacBookPro10,1)
 
