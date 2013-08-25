@@ -49,16 +49,22 @@ mount_iso () {
 verify_tails () {
   curl -o data/tails-signing.key $TAILS_KEY_URL
   curl -o data/tails.iso.sig $TAILS_SIG_URL
-
+ 
+  rm -f data/tmp_keyring.pgp
   gpg --no-default-keyring --keyring data/tmp_keyring.pgp --import data/tails-signing.key
   FINGERPRINT=$( gpg --no-default-keyring --keyring data/tmp_keyring.pgp --fingerprint BE2CD9C1 2>/dev/null | awk '/Key fingerprint/ { print $4 $5 $6 $7 $8 $9 $10 $11 $12 $13}')
   
   if [ "$FINGERPRINT" != "0D24B36AA9A2A651787876451202821CBE2CD9C1" ];then
     echo "ERROR! The imported key does not seem to be right one. Something is fishy!"
-    rm data/tmp_keyring.pgp
     exit 1
   fi
-  gpg --verify data/tails.iso.sig
+
+  if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --verify data/tails.iso.sig; then
+    echo "The .iso seems legit."
+  else
+    echo "ERROR! The iso does not seem to be signed by the TAILS key. Something is fishy!"
+    exit 1
+  fi
 }
 
 download_tails () {
