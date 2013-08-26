@@ -40,6 +40,16 @@ Notes:
 
 Notes:
 
+## MacBook Air, Late 2010 (MacBookAir3,2)
+
+* **boots** yes
+
+* **wifi** yes
+
+* **trackpad** yes
+
+Notes:
+
 ## MacBook Pro, (MacBookPro8,1)
 
 * **boots** yes
