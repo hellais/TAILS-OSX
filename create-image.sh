@@ -58,8 +58,9 @@ verify_tails () {
     echo "ERROR! The imported key does not seem to be right one. Something is fishy!"
     exit 1
   fi
-
-  if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --verify data/tails.iso.sig; then
+  
+  #if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --verify data/tails.iso.sig; then
+  if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --status-fd 1 --verify tails.iso.sig 2&>1 | grep "VALIDSIG";
     echo "The .iso seems legit."
   else
     echo "ERROR! The iso does not seem to be signed by the TAILS key. Something is fishy!"
