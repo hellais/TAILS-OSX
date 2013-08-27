@@ -1,4 +1,6 @@
 #!/bin/bash
+set -x
+
 TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/tails-i386-0.20/tails-i386-0.20.iso"
 TAILS_SIG_URL="https://tails.boum.org/torrents/files/tails-i386-0.20.iso.sig"
 TAILS_KEY_URL="https://tails.boum.org/tails-signing.key"
@@ -52,15 +54,15 @@ verify_tails () {
  
   rm -f data/tmp_keyring.pgp
   gpg --no-default-keyring --keyring data/tmp_keyring.pgp --import data/tails-signing.key
-  FINGERPRINT=$( gpg --no-default-keyring --keyring data/tmp_keyring.pgp --fingerprint BE2CD9C1 2>/dev/null | awk '/Key fingerprint/ { print $4 $5 $6 $7 $8 $9 $10 $11 $12 $13}')
-  
-  if [ "$FINGERPRINT" != "0D24B36AA9A2A651787876451202821CBE2CD9C1" ];then
+
+  if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --fingerprint BE2CD9C1 | grep "0D24 B36A A9A2 A651 7878  7645 1202 821C BE2C D9C1";then
+    echo "The import TAILS developer key is ok."
+  else
     echo "ERROR! The imported key does not seem to be right one. Something is fishy!"
     exit 1
   fi
   
-  #if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --verify data/tails.iso.sig; then
-  if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --status-fd 1 --verify tails.iso.sig 2&>1 | grep "VALIDSIG";
+  if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --verify data/tails.iso.sig; then
     echo "The .iso seems legit."
   else
     echo "ERROR! The iso does not seem to be signed by the TAILS key. Something is fishy!"
