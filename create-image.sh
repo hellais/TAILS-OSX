@@ -1,8 +1,8 @@
 #!/bin/bash
 set -x
 
-TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/tails-i386-0.20.1/tails-i386-0.20.1.iso"
-TAILS_SIG_URL="https://tails.boum.org/torrents/files/tails-i386-0.20.1.iso.sig"
+TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/tails-i386-0.21/tails-i386-0.21.iso"
+TAILS_SIG_URL="https://tails.boum.org/torrents/files/tails-i386-0.21.iso.sig"
 TAILS_KEY_URL="https://tails.boum.org/tails-signing.key"
 
 if [ ! -d "data" ]; then
