@@ -1,6 +1,19 @@
 #!/bin/bash
-set -x
 
+if [ "$1" == "clean" ]; then
+  NONCE=$RANDOM$RANDOM
+  mv data data$NONCE/
+  mkdir data
+  mv data$NONCE/BOOTX64.efi data/
+  rm -rf data$NONCE/
+  echo "Cleaned up the data/ directory!"
+  echo "You can now re-run the script with:"
+  echo "$0"
+
+  exit 0
+fi
+
+set -x
 TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/tails-i386-0.21/tails-i386-0.21.iso"
 TAILS_SIG_URL="https://tails.boum.org/torrents/files/tails-i386-0.21.iso.sig"
 TAILS_KEY_URL="https://tails.boum.org/tails-signing.key"
