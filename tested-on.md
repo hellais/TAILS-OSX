@@ -30,6 +30,16 @@ Notes:
 
 Notes: 
 
+## MacBook Pro, Mid 2011 (MacBookPro9,2)
+
+* **boots** yes
+
+* **wifi** yes
+
+* **trackpad** yes
+
+Notes: 
+
 ## MacBook Pro, Early 2011 (MacBookPro8,2)
 
 * **boots** no
