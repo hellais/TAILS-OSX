@@ -38,7 +38,7 @@ Notes:
 
 * **trackpad** no
 
-Notes:
+Notes: Hangs just after `Waiting for /dev to be fully populated...`.
 
 ## MacBook Pro, Early 2011 (MacBookPro8,2)
 
