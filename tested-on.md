@@ -68,9 +68,21 @@ Notes:
 
 * **trackpad** no
 
+Notes:
+
+## MacBook Pro, Mid 2009 (MacBookPro5,5)
+
+* **boots** yes
+
+* **wifi** yes
+
+* **trackpad** yes
+
+Notes:
+
 Notes: Nvidia graphics card issue. I believe that the reason for this problem is the lack of Linux kernel mode setting (KMS) support in Apple's EFI firmware.
 
-## MacBook Air, Late 2011 (MacBookAir4,2)
+## MacBook Air, Mid 2011 (MacBookAir4,2)
 
 * **boots** yes
 
