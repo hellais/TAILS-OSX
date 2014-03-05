@@ -80,6 +80,16 @@ Notes:
 
 Notes: Nvidia graphics card issue. I believe that the reason for this problem is the lack of Linux kernel mode setting (KMS) support in Apple's EFI firmware.
 
+## MacBook Pro, Late 2008 (MacBookPro5,1)
+
+* **boots** no
+
+* **wifi** no
+
+* **trackpad** no
+
+Notes: With default kernel options it stops booting after loading nouveau. When setting nouveau.modeset=0 it tries to start X and hangs at a blank screen with
+a blinking cursor.
 
 # Have you tested this on a platform that isn't listed above?
 
