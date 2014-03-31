@@ -14,7 +14,7 @@ if [ "$1" == "clean" ]; then
 fi
 
 set -x
-TAILS_ISO_URL="https://dl.amnesia.boum.org/tails/stable/tails-i386-0.22.1/tails-i386-0.23.iso"
+TAILS_ISO_URL="https://dl.amnesia.boum.org/tails/stable/tails-i386-0.23/tails-i386-0.23.iso"
 TAILS_SIG_URL="https://tails.boum.org/torrents/files/tails-i386-0.23.iso.sig"
 TAILS_KEY_URL="https://tails.boum.org/tails-signing.key"
 
