@@ -14,8 +14,8 @@ if [ "$1" == "clean" ]; then
 fi
 
 set -x
-TAILS_ISO_URL="https://dl.amnesia.boum.org/tails/stable/tails-i386-0.23/tails-i386-0.23.iso"
-TAILS_SIG_URL="https://tails.boum.org/torrents/files/tails-i386-0.23.iso.sig"
+TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/tails-i386-1.0/tails-i386-1.0.iso"
+TAILS_SIG_URL="https://tails.boum.org/torrents/files/tails-i386-1.0.iso.sig"
 TAILS_KEY_URL="https://tails.boum.org/tails-signing.key"
 
 if [ ! -d "data" ]; then
@@ -84,7 +84,7 @@ verify_tails () {
 }
 
 download_tails () {
-  curl -o data/tails.iso $TAILS_ISO_URL
+  curl -k -o data/tails.iso $TAILS_ISO_URL
 }
 
 list_disks () {
