@@ -125,6 +125,7 @@ create_image () {
   else
     echo "[+] Generating the BOOTX64.efi with vagrant. This will take a while."
     vagrant up
+    vagrant provision
   fi
 
   create_disk $TARGET_DISK
