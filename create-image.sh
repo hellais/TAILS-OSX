@@ -64,7 +64,7 @@ mount_iso () {
 verify_tails () {
   curl -o data/tails-signing.key $TAILS_KEY_URL
   curl -o data/tails.iso.sig $TAILS_SIG_URL
- 
+
   rm -f data/tmp_keyring.pgp
   gpg --no-default-keyring --keyring data/tmp_keyring.pgp --import data/tails-signing.key
 
@@ -74,7 +74,7 @@ verify_tails () {
     echo "ERROR! The imported key does not seem to be right one. Something is fishy!"
     exit 1
   fi
-  
+
   if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --verify data/tails.iso.sig; then
     echo "The .iso seems legit."
   else
@@ -97,12 +97,12 @@ list_disks () {
 create_image () {
 
   echo "What disk would you like to use for the TAILS image? "
-  list_disks 
+  list_disks
   read TARGET_DISK
 
   echo "Warning $TARGET_DISK will be erased. Do you wish to continue [y|n]? "
-  read ans 
-  
+  read ans
+
   if [ $ans = y -o $ans = Y -o $ans = yes -o $ans = Yes -o $ans = YES ]
   then
     echo "Ok, you wanted it!"
