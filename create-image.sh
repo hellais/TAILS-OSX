@@ -84,7 +84,8 @@ verify_tails () {
 }
 
 download_tails () {
-  curl -k -o data/tails.iso $TAILS_ISO_URL
+  curl -k -o data/tails-tmp.iso $TAILS_ISO_URL
+  mv data/tails-tmp.iso data/tails.iso
 }
 
 list_disks () {
