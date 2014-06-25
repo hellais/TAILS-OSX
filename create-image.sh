@@ -140,7 +140,7 @@ create_image () {
   cp grub.cfg $DISK_PATH/efi/boot/
 
   echo "[+] Copying live directory"
-  cp -R $ISO_PATH/live $DISK_PATH/live
+  rsync -ah --progress $ISO_PATH/live $DISK_PATH
 
   echo "All done"
 }
