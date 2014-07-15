@@ -1,5 +1,15 @@
 # Tested platforms
 
+## MacBook Pro Retina, Late 2013 (MacBookPro11,3)
+
+* **boots** yes
+
+* **wifi** no
+
+* **trackpad** yes
+
+Notes: 
+
 ## MacBook Pro Retina, Early 2013 (MacBookPro10,1)
 
 * **boots** yes
