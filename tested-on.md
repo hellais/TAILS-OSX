@@ -121,6 +121,36 @@ Notes: Nvidia graphics card issue. I believe that the reason for this problem is
 Notes: With default kernel options it stops booting after loading nouveau. When setting nouveau.modeset=0 it tries to start X and hangs at a blank screen with
 a blinking cursor.
 
+## MacBook (Aluminum, not Pro), Late 2008 (MacBook5,1)
+
+* **boots** yes
+
+* **wifi** yes
+
+* **trackpad** yes
+
+Notes:
+
+## iMac, Early 2008 (iMac8,1)
+
+* **boots** yes
+
+* **wifi** yes
+
+* **trackpad** N/A
+
+Notes: Works with USB mouse and keyboard
+
+## iMac, Late 2013 (iMac14,2)
+
+* **boots** yes
+
+* **wifi** no
+
+* **trackpad** N/A
+
+Notes: Works with USB mouse and keyboard
+
 # Have you tested this on a platform that isn't listed above?
 
 Send a pull request to this repository that includes your model identifier and which things work and don't work.
