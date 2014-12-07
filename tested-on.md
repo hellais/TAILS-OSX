@@ -70,6 +70,16 @@ Notes:
 
 Notes: 
 
+## MacBook Pro, Early 2011 (MacBookPro8,1)
+
+* **boots** yes
+
+* **wifi** unknown
+
+* **trackpad** unknown
+
+Notes:
+
 ## MacBook Pro, Early 2011 (MacBookPro8,2)
 
 * **boots** no
