@@ -17,6 +17,7 @@ set -x
 TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/tails-i386-1.2.1/tails-i386-1.2.1.iso"
 TAILS_SIG_URL="https://tails.boum.org/torrents/files/tails-i386-1.2.1.iso.sig"
 TAILS_KEY_URL="https://tails.boum.org/tails-signing.key"
+TAILS_PARTITION_NAME="Tails"
 
 if [ ! -d "data" ]; then
   echo "[+] Creating data/ directory..."
@@ -29,7 +30,7 @@ create_disk () {
   # This erases the TARGET disk and creates 1 FAT32 partition that is of the
   # size of the drive.
   if [ "$( uname -s )" == "Darwin" ];then
-    diskutil eraseDisk FAT32 TAILSLIVECD $TARGET_DISK
+    diskutil partitionDisk $TARGET_DISK GPT HFS+ $TAILS_PARTITION_NAME 4g Free\ Space Ignored R
   else
     echo "Currently don't support building image on this platform"
   fi
@@ -39,8 +40,8 @@ mount_disk () {
   # This mounts the USB disk and returns the mount_point of the USB disk
   local  __resultvar=$1
   if [ "$( uname -s )" == "Darwin" ];then
-    local mount_point="/Volumes/TAILSLIVECD"
-    diskutil mount -mountpoint $mount_point TAILSLIVECD
+    local mount_point="/Volumes/$TAILS_PARTITION_NAME"
+    diskutil mount -mountpoint $mount_point $TAILS_PARTITION_NAME
   else
     echo "Currently don't support building image on this platform"
     exit 1
@@ -64,7 +65,7 @@ mount_iso () {
 verify_tails () {
   curl -o data/tails-signing.key $TAILS_KEY_URL
   curl -o data/tails.iso.sig $TAILS_SIG_URL
- 
+
   rm -f data/tmp_keyring.pgp
   gpg --no-default-keyring --keyring data/tmp_keyring.pgp --import data/tails-signing.key
 
@@ -74,7 +75,7 @@ verify_tails () {
     echo "ERROR! The imported key does not seem to be right one. Something is fishy!"
     exit 1
   fi
-  
+
   if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --verify data/tails.iso.sig; then
     echo "The .iso seems legit."
   else
@@ -98,12 +99,12 @@ list_disks () {
 create_image () {
 
   echo "What disk would you like to use for the TAILS image? "
-  list_disks 
+  list_disks
   read TARGET_DISK
 
   echo "Warning $TARGET_DISK will be erased. Do you wish to continue [y|n]? "
-  read ans 
-  
+  read ans
+
   if [ $ans = y -o $ans = Y -o $ans = yes -o $ans = Yes -o $ans = YES ]
   then
     echo "Ok, you wanted it!"
@@ -125,6 +126,7 @@ create_image () {
   else
     echo "[+] Generating the BOOTX64.efi with vagrant. This will take a while."
     vagrant up
+    vagrant provision
   fi
 
   create_disk $TARGET_DISK
