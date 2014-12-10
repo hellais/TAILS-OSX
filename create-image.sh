@@ -1,11 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "clean" ]; then
-  NONCE=$RANDOM$RANDOM
-  mv data data$NONCE/
-  mkdir data
-  mv data$NONCE/BOOTX64.efi data/
-  rm -rf data$NONCE/
+  find data -not -path data -not -path data/BOOTX64.efi -not path data/.gitignore -delete
   echo "Cleaned up the data/ directory!"
   echo "You can now re-run the script with:"
   echo "$0"
