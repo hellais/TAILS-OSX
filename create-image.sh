@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "clean" ]; then
-  find data -not -path data -not -path data/BOOTX64.efi -not path data/.gitignore -delete
+  find data -not -path data -not -path data/BOOTX64.efi -not path data/.gitignore -not path data/TAILS.icns -delete
   echo "Cleaned up the data/ directory!"
   echo "You can now re-run the script with:"
   echo "$0"
@@ -128,6 +128,9 @@ create_image () {
   mount_disk DISK_PATH
 
   mkdir -p $DISK_PATH/efi/boot/
+
+  echo "[+] Copying Volume Icon"
+  cp data/TAILS.icns $DISK_PATH/.VolumeIcon.icns
 
   echo "[+] Copying BOOTX64.efi"
   cp data/BOOTX64.efi $DISK_PATH/efi/boot/
