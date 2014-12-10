@@ -74,9 +74,15 @@ Notes:
 
 * **boots** yes
 
+<<<<<<< HEAD
 * **wifi** unknown
 
 * **trackpad** unknown
+=======
+* **wifi** yes
+
+* **trackpad** yes
+>>>>>>> origin/update-tested-on-list
 
 Notes:
 
