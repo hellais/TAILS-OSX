@@ -129,8 +129,9 @@ create_image () {
 
   mkdir -p $DISK_PATH/efi/boot/
 
-  echo "[+] Copying Volume Icon"
+  echo "[+] Setting Volume Icon"
   cp data/TAILS.icns $DISK_PATH/.VolumeIcon.icns
+  SetFile -a C $DISK_PATH
 
   echo "[+] Copying BOOTX64.efi"
   cp data/BOOTX64.efi $DISK_PATH/efi/boot/
