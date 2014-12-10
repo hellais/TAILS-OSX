@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "clean" ]; then
-  find data -not -path data -not -path data/BOOTX64.efi -not path data/.gitignore -not path data/TAILS.icns -delete
+  find data -not -path data -not -path data/BOOTX64.efi -not -path data/.gitignore -not -path data/TAILS.icns -delete
   echo "Cleaned up the data/ directory!"
   echo "You can now re-run the script with:"
   echo "$0"
