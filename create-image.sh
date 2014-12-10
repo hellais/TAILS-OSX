@@ -5,6 +5,7 @@ if [ "$1" == "clean" ]; then
   mv data data$NONCE/
   mkdir data
   mv data$NONCE/BOOTX64.efi data/
+  mv data$NONCE/TAILS.icns data/
   rm -rf data$NONCE/
   echo "Cleaned up the data/ directory!"
   echo "You can now re-run the script with:"
@@ -132,6 +133,9 @@ create_image () {
   mount_disk DISK_PATH
 
   mkdir -p $DISK_PATH/efi/boot/
+
+  echo "[+] Copying Volume Icon"
+  cp data/TAILS.icns $DISK_PATH/.VolumeIcon.icns
 
   echo "[+] Copying BOOTX64.efi"
   cp data/BOOTX64.efi $DISK_PATH/efi/boot/
