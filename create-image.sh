@@ -9,10 +9,8 @@ if [ "$1" == "clean" ]; then
   exit 0
 fi
 
-set -x
-TAILS_VERSION=$(curl -s http://dl.amnesia.boum.org/tails/stable/ | sed -n "s/^.*\(tails-i386-[0-9.]*\).*$/\1/p")
-TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/$TAILS_VERSION/$TAILS_VERSION.iso"
-TAILS_SIG_URL="https://tails.boum.org/torrents/files/$TAILS_VERSION.iso.sig"
+#set -x
+
 TAILS_KEY_URL="https://tails.boum.org/tails-signing.key"
 USB_PART_NAME="TAILSLIVE"
 
@@ -60,9 +58,6 @@ mount_iso () {
 }
 
 verify_tails () {
-  curl -o data/tails-signing.key $TAILS_KEY_URL
-  curl -o data/tails.iso.sig $TAILS_SIG_URL
- 
   rm -f data/tmp_keyring.pgp
   gpg --no-default-keyring --keyring data/tmp_keyring.pgp --import data/tails-signing.key
 
@@ -82,8 +77,13 @@ verify_tails () {
 }
 
 download_tails () {
-  curl -k -o data/tails-tmp.iso $TAILS_ISO_URL
+  # This parses the Tails website downloads section to find the latest version
+  # then downloads it along with the signature and key
+  TAILS_VERSION=$(curl -s http://dl.amnesia.boum.org/tails/stable/ | sed -n "s/^.*\(tails-i386-[0-9.]*\).*$/\1/p")
+  curl -o data/tails-tmp.iso http://dl.amnesia.boum.org/tails/stable/$TAILS_VERSION/$TAILS_VERSION.iso
   mv data/tails-tmp.iso data/tails.iso
+  curl -o data/tails.iso.sig https://tails.boum.org/torrents/files/$TAILS_VERSION.iso.sig
+  curl -o data/tails-signing.key $TAILS_KEY_URL
 }
 
 list_disks () {
