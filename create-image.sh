@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "clean" ]; then
-  find data -not -path data -not -path data/BOOTX64.efi -not path data/.gitignore -delete
+  find data -not -path data -not -path data/BOOTX64.efi -not -path data/.gitignore -not -path data/TAILS.icns -delete
   echo "Cleaned up the data/ directory!"
   echo "You can now re-run the script with:"
   echo "$0"
@@ -9,10 +9,10 @@ if [ "$1" == "clean" ]; then
   exit 0
 fi
 
-set -x
-TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/tails-i386-1.2.1/tails-i386-1.2.1.iso"
-TAILS_SIG_URL="https://tails.boum.org/torrents/files/tails-i386-1.2.1.iso.sig"
+#set -x
+
 TAILS_KEY_URL="https://tails.boum.org/tails-signing.key"
+USB_PART_NAME="TAILSLIVE"
 
 if [ ! -d "data" ]; then
   echo "[+] Creating data/ directory..."
@@ -25,7 +25,7 @@ create_disk () {
   # This erases the TARGET disk and creates 1 FAT32 partition that is of the
   # size of the drive.
   if [ "$( uname -s )" == "Darwin" ];then
-    diskutil eraseDisk FAT32 TAILSLIVECD $TARGET_DISK
+    diskutil eraseDisk FAT32 $USB_PART_NAME $TARGET_DISK
   else
     echo "Currently don't support building image on this platform"
   fi
@@ -35,8 +35,8 @@ mount_disk () {
   # This mounts the USB disk and returns the mount_point of the USB disk
   local  __resultvar=$1
   if [ "$( uname -s )" == "Darwin" ];then
-    local mount_point="/Volumes/TAILSLIVECD"
-    diskutil mount -mountpoint $mount_point TAILSLIVECD
+    local mount_point="/Volumes/$USB_PART_NAME"
+    diskutil mount -mountpoint $mount_point $USB_PART_NAME
   else
     echo "Currently don't support building image on this platform"
     exit 1
@@ -58,9 +58,6 @@ mount_iso () {
 }
 
 verify_tails () {
-  curl -o data/tails-signing.key $TAILS_KEY_URL
-  curl -o data/tails.iso.sig $TAILS_SIG_URL
- 
   rm -f data/tmp_keyring.pgp
   gpg --no-default-keyring --keyring data/tmp_keyring.pgp --import data/tails-signing.key
 
@@ -80,8 +77,13 @@ verify_tails () {
 }
 
 download_tails () {
-  curl -k -o data/tails-tmp.iso $TAILS_ISO_URL
+  # This parses the Tails website downloads section to find the latest version
+  # then downloads it along with the signature and key
+  TAILS_VERSION=$(curl -s http://dl.amnesia.boum.org/tails/stable/ | sed -n "s/^.*\(tails-i386-[0-9.]*\).*$/\1/p")
+  curl -o data/tails-tmp.iso http://dl.amnesia.boum.org/tails/stable/$TAILS_VERSION/$TAILS_VERSION.iso
   mv data/tails-tmp.iso data/tails.iso
+  curl -o data/tails.iso.sig https://tails.boum.org/torrents/files/$TAILS_VERSION.iso.sig
+  curl -o data/tails-signing.key $TAILS_KEY_URL
 }
 
 list_disks () {
@@ -129,6 +131,10 @@ create_image () {
 
   mkdir -p $DISK_PATH/efi/boot/
 
+  echo "[+] Setting Volume Icon"
+  cp data/TAILS.icns $DISK_PATH/.VolumeIcon.icns
+  SetFile -a C $DISK_PATH
+
   echo "[+] Copying BOOTX64.efi"
   cp data/BOOTX64.efi $DISK_PATH/efi/boot/
 
@@ -137,6 +143,8 @@ create_image () {
 
   echo "[+] Copying live directory"
   rsync -ah --progress $ISO_PATH/live $DISK_PATH
+
+  hdiutil detach $ISO_PATH
 
   echo "All done"
 }

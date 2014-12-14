@@ -3,3 +3,4 @@
 # Except this file
 !.gitignore
 !BOOTX64.efi
+!TAILS.icns
