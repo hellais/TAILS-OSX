@@ -68,6 +68,14 @@ properly.
 Once you have finished this you will have a usb disk you can boot by holding
 down the alt-option key at startup.
 
+# TAILS official documentation
+
+New versions of TAILS support UEFI bootloaders out of the box. This means that in the near future this procedure will no longer be needed.
+
+If you would like to use their method for setting up TAILS instead of running this script you should follow their instructions at the following address:
+
+https://tails.boum.org/doc/first_steps/installation/manual/mac/index.en.html
+
 # References
 
 * https://github.com/globaleaks/GlobaLeaks/issues/345
