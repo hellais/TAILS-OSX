@@ -74,9 +74,9 @@ Notes:
 
 * **boots** yes
 
-* **wifi** unknown
+* **wifi** yes
 
-* **trackpad** unknown
+* **trackpad** yes
 
 Notes:
 
