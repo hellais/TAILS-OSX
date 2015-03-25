@@ -10,8 +10,8 @@ if [ "$1" == "clean" ]; then
 fi
 
 set -x
-TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/tails-i386-1.2.3/tails-i386-1.2.3.iso"
-TAILS_SIG_URL="https://tails.boum.org/torrents/files/tails-i386-1.2.3.iso.sig"
+TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/tails-i386-1.3.1/tails-i386-1.3.1.iso"
+TAILS_SIG_URL="https://tails.boum.org/torrents/files/tails-i386-1.3.1.iso.sig"
 TAILS_KEY_URL="https://tails.boum.org/tails-signing.key"
 
 if [ ! -d "data" ]; then
@@ -64,7 +64,7 @@ verify_tails () {
   rm -f data/tmp_keyring.pgp
   gpg --no-default-keyring --keyring data/tmp_keyring.pgp --import data/tails-signing.key
 
-  if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --fingerprint BE2CD9C1 | grep "0D24 B36A A9A2 A651 7878  7645 1202 821C BE2C D9C1";then
+  if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --fingerprint 58ACD84F | grep "A490 D0F4 D311 A415 3E2B  B7CA DBB8 02B2 58AC D84F";then
     echo "The import TAILS developer key is ok."
   else
     echo "ERROR! The imported key does not seem to be right one. Something is fishy!"
