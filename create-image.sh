@@ -1,11 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "clean" ]; then
-  NONCE=$RANDOM$RANDOM
-  mv data data$NONCE/
-  mkdir data
-  mv data$NONCE/BOOTX64.efi data/
-  rm -rf data$NONCE/
+  find data -not -path data -not -path data/BOOTX64.efi -not path data/.gitignore -delete
   echo "Cleaned up the data/ directory!"
   echo "You can now re-run the script with:"
   echo "$0"
@@ -14,8 +10,9 @@ if [ "$1" == "clean" ]; then
 fi
 
 set -x
-TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/tails-i386-1.1.1/tails-i386-1.1.1.iso"
-TAILS_SIG_URL="https://tails.boum.org/torrents/files/tails-i386-1.1.1.iso.sig"
+TAILS_VERSION=$(curl -s http://dl.amnesia.boum.org/tails/stable/ | sed -n "s/^.*\(tails-i386-[0-9.]*\).*$/\1/p")
+TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/$TAILS_VERSION/$TAILS_VERSION.iso"
+TAILS_SIG_URL="https://tails.boum.org/torrents/files/$TAILS_VERSION.iso.sig"
 TAILS_KEY_URL="https://tails.boum.org/tails-signing.key"
 
 if [ ! -d "data" ]; then
@@ -68,7 +65,7 @@ verify_tails () {
   rm -f data/tmp_keyring.pgp
   gpg --no-default-keyring --keyring data/tmp_keyring.pgp --import data/tails-signing.key
 
-  if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --fingerprint BE2CD9C1 | grep "0D24 B36A A9A2 A651 7878  7645 1202 821C BE2C D9C1";then
+  if gpg --no-default-keyring --keyring data/tmp_keyring.pgp --fingerprint 58ACD84F | grep "A490 D0F4 D311 A415 3E2B  B7CA DBB8 02B2 58AC D84F";then
     echo "The import TAILS developer key is ok."
   else
     echo "ERROR! The imported key does not seem to be right one. Something is fishy!"
