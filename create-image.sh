@@ -11,6 +11,10 @@ fi
 
 set -x
 TAILS_VERSION=$(curl -s http://dl.amnesia.boum.org/tails/stable/ | sed -n "s/^.*\(tails-i386-[0-9.]*\).*$/\1/p")
+if [ -z "$TAILS_VERSION" ]; then
+  TAILS_VERSION="tails-i386-1.3.2";
+  echo "Could not detect latest version. Using $TAILS_VERSION instead."
+fi
 TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/$TAILS_VERSION/$TAILS_VERSION.iso"
 TAILS_SIG_URL="https://tails.boum.org/torrents/files/$TAILS_VERSION.iso.sig"
 TAILS_KEY_URL="https://tails.boum.org/tails-signing.key"
