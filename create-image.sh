@@ -146,5 +146,7 @@ create_image () {
   echo "All done"
 }
 
+hdiutil detach $ISO_PATH
+
 create_image;
 
