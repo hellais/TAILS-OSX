@@ -9,7 +9,7 @@ if [ "$1" == "clean" ]; then
   exit 0
 fi
 
-set -x
+#set -x
 TAILS_VERSION=$(curl -s http://dl.amnesia.boum.org/tails/stable/ | sed -n "s/^.*\(tails-i386-[0-9.]*\).*$/\1/p")
 if [ -z "$TAILS_VERSION" ]; then
   TAILS_VERSION="tails-i386-1.3.2";
