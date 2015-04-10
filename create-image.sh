@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "clean" ]; then
-  find data -not -path data -not -path data/BOOTX64.efi -not path data/.gitignore -delete
+  find data -not -path data -not -path data/BOOTX64.efi -not -path data/.gitignore -delete
   echo "Cleaned up the data/ directory!"
   echo "You can now re-run the script with:"
   echo "$0"
@@ -11,9 +11,14 @@ fi
 
 set -x
 TAILS_VERSION=$(curl -s http://dl.amnesia.boum.org/tails/stable/ | sed -n "s/^.*\(tails-i386-[0-9.]*\).*$/\1/p")
+if [ -z "$TAILS_VERSION" ]; then
+  echo "Could not detect latest version of TAILS. Please report this issue at"
+  echo "https://github.com/hellais/TAILS-OSX/issues/new"
+fi
 TAILS_ISO_URL="http://dl.amnesia.boum.org/tails/stable/$TAILS_VERSION/$TAILS_VERSION.iso"
 TAILS_SIG_URL="https://tails.boum.org/torrents/files/$TAILS_VERSION.iso.sig"
 TAILS_KEY_URL="https://tails.boum.org/tails-signing.key"
+USB_PART_NAME="TAILSLIVE"
 
 if [ ! -d "data" ]; then
   echo "[+] Creating data/ directory..."
@@ -26,7 +31,7 @@ create_disk () {
   # This erases the TARGET disk and creates 1 FAT32 partition that is of the
   # size of the drive.
   if [ "$( uname -s )" == "Darwin" ];then
-    diskutil eraseDisk FAT32 TAILSLIVECD $TARGET_DISK
+    diskutil eraseDisk FAT32 $USB_PART_NAME $TARGET_DISK
   else
     echo "Currently don't support building image on this platform"
   fi
@@ -36,8 +41,8 @@ mount_disk () {
   # This mounts the USB disk and returns the mount_point of the USB disk
   local  __resultvar=$1
   if [ "$( uname -s )" == "Darwin" ];then
-    local mount_point="/Volumes/TAILSLIVECD"
-    diskutil mount -mountpoint $mount_point TAILSLIVECD
+    local mount_point="/Volumes/$USB_PART_NAME"
+    diskutil mount -mountpoint $mount_point $USB_PART_NAME
   else
     echo "Currently don't support building image on this platform"
     exit 1
@@ -81,7 +86,7 @@ verify_tails () {
 }
 
 download_tails () {
-  curl -k -o data/tails-tmp.iso $TAILS_ISO_URL
+  curl -o data/tails-tmp.iso $TAILS_ISO_URL
   mv data/tails-tmp.iso data/tails.iso
 }
 
@@ -141,6 +146,8 @@ create_image () {
 
   echo "All done"
 }
+
+hdiutil detach $ISO_PATH
 
 create_image;
 
