@@ -1,5 +1,13 @@
 # Tested platforms
 
+## MacBook Air, Early 2014
+
+* **boots** yes
+
+* **wifi** no
+
+* **trackpad** yes
+
 ## MacBook Pro Retina, Late 2013 (MacBookPro11,3)
 
 * **boots** yes
