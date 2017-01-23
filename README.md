@@ -1,5 +1,8 @@
 # TAILS OSX
 
+**ATTENTION**
+This guide has not been updated in a long time. TAILS now supports natively EFI bootloaders, so if you are interested in using TAILS on a macOS computer you should follow the official guide here: https://tails.boum.org/install/mac/usb/index.en.html.
+
 Following this guide you will be able to create a TAILS image that will work on
 OSX without requiring any REFIT or bootloader modifications to the target
 system.
@@ -82,7 +85,7 @@ https://tails.boum.org/doc/first_steps/installation/manual/mac/index.en.html
 
 Mainly inspired by:
 
-* http://fedorasolved.org/Members/jmontleon/installing-fedora-16-on-macbooks-using-grub2-efi
+* [http://fedorasolved.org/Members/jmontleon/installing-fedora-16-on-macbooks-using-grub2-efi](http://web.archive.org/web/20130724054355/http://fedorasolved.org/Members/jmontleon/installing-fedora-16-on-macbooks-using-grub2-efi)
 
 Misc links:
 
